@@ -19,7 +19,7 @@
 
 package org.gabsocial.collection;
 
-public class WordDictionary<K, V>
+public class WordDictionaryTest
 {
     
 }

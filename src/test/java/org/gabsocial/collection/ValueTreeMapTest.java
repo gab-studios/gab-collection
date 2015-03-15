@@ -1,3 +1,4 @@
+
 /*****************************************************************************************
  * 
  * Copyright 2015 Gregory Brown. All Rights Reserved.
@@ -16,10 +17,9 @@
  * 
  ***************************************************************************************** 
  */
-
 package org.gabsocial.collection;
 
-public class WordDictionary<K, V>
+public class ValueTreeMapTest 
 {
-    
+
 }
