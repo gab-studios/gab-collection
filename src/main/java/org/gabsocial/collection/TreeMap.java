@@ -28,7 +28,9 @@ import java.util.List;
  * @author Gregory Brown (sysdevone)
  * 
  * @param <K>
+ *            This defines the type of key.
  * @param <V>
+ *            This defines the type of value bound to the key.
  */
 public interface TreeMap<K, V>
 {
@@ -178,7 +180,7 @@ public interface TreeMap<K, V>
     public abstract boolean isLeaf();
     
     /**
-     * Removes a child </code>TreeMap</code> from this <code>TreeMap</code>. The
+     * Removes a child <code>TreeMap</code> from this <code>TreeMap</code>. The
      * removed <code>TreeMap</code> will have its parent set to null.
      * 
      * @param key
@@ -191,9 +193,12 @@ public interface TreeMap<K, V>
     
     /**
      * Sets the parent of this <code>TreeMap</code> to another
-     * <code>TreeMap</code>
+     * <code>TreeMap</code>. The previous parent will be removed and the parent
+     * tree will remove this tree from its children.
      * 
      * @param tree
+     *            A <code>TreeMap</code> instance that will be the parent of
+     *            this node.
      */
     public abstract void setParent(TreeMap<K, V> tree);
     

@@ -330,6 +330,10 @@ public class ValueTreeMap<K, V> implements TreeMap<K, V>
     @Override
     public void setParent(final TreeMap<K, V> parent)
     {
+        if (this._parent != null)
+        {
+            this._parent.removeChild(this._name);
+        }
         this._parent = parent;
     }
     

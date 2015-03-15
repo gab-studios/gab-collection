@@ -28,7 +28,7 @@ import java.util.List;
  * @author Gregory Brown (sysdevone)
  * 
  * @param <K>
- * @param <V>
+ *            This defines the type of the key.
  */
 public interface Tree<K>
 {
@@ -130,6 +130,6 @@ public interface Tree<K>
      *            A <code>Tree</code> instance.
      * @return The key of the tree that is being added.
      */
-    public abstract <T extends Tree<K>> K add(T tree);
+    public abstract K add(Tree<K> tree);
     
 }
