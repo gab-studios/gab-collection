@@ -34,6 +34,16 @@ public interface Tree<K>
 {
     
     /**
+     * Adds a <code>Tree</code> instance to this <code>Tree</code>. That newly
+     * added tree's parent will be this tree.
+     * 
+     * @param tree
+     *            A <code>Tree</code> instance.
+     * @return The key of the tree that is being added.
+     */
+    public abstract K add(Tree<K> tree);
+    
+    /**
      * Adds a child node to this node.
      * 
      * @param key
@@ -121,15 +131,5 @@ public interface Tree<K>
      *         removed.
      */
     public abstract Tree<K> removeChild(K key);
-    
-    /**
-     * Adds a <code>Tree</code> instance to this <code>Tree</code>. That newly
-     * added tree's parent will be this tree.
-     * 
-     * @param tree
-     *            A <code>Tree</code> instance.
-     * @return The key of the tree that is being added.
-     */
-    public abstract K add(Tree<K> tree);
     
 }
