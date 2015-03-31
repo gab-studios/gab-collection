@@ -100,7 +100,8 @@ public class Tree<T>
          * Adds a child to the node.
          * 
          * @param data
-         * @return
+         *            Is an object instance held in the Node.
+         * @return A <code>Node</code> instance that was created.
          */
         public Node<T> add(final T data)
         {
@@ -147,7 +148,7 @@ public class Tree<T>
          * Gets the children added to this node.
          * 
          * @return A
-         *         <code>List<code> instance containing 0 to n <code>Node</code>
+         *         <code>List</code> instance containing 0 to n <code>Node</code>
          *         instances.
          */
         @SuppressWarnings("unchecked")
