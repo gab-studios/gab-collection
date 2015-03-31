@@ -19,117 +19,373 @@
 
 package org.gabsocial.collection;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.gabsocial.gabdev.validate.Validate;
 
 
 /**
  * 
+ * This is a Tree data structure that holds a value. The value may not be null.
+ * A node can have 1 to many children. Duplicate siblings with the same value is
+ * not allowed.
+ * 
+ * The order of when a child is added is maintained.
+ * 
+ * A tree may hold onto multiple nodes with the same data.
+ * 
+ * A Node uses a hashmap to hold its children so the search is O(1).
  * 
  * @author Gregory Brown (sysdevone)
  * 
- * @param <K>
- *            This defines the type of the key.
+ * @param <T>
+ *            This defines the class type of the data.
  */
-public interface Tree<K>
+public class Tree<T>
 {
     
     /**
-     * Adds a <code>Tree</code> instance to this <code>Tree</code>. That newly
-     * added tree's parent will be this tree.
+     * The node within a Tree.
      * 
-     * @param tree
-     *            A <code>Tree</code> instance.
-     * @return The key of the tree that is being added.
+     * 
+     * @author Gregory Brown (sysdevone)
+     * 
+     * @param <T>
+     *            This defines the class type of the data.
      */
-    public abstract K add(Tree<K> tree);
+    public static class Node<T>
+    {
+        /*
+         * Holds the child nodes of this node. Will not hold a duplicate child.
+         */
+        private final java.util.LinkedHashMap<T, Node<T>> _children;
+        
+        /*
+         * The data held in this node.
+         */
+        private final T                                   _data;
+        
+        /*
+         * The parent node to this node. May be null if this node is the root.
+         */
+        private Node<T>                                   _parent;
+        
+        /*
+         * The tree that this node belongs too.
+         */
+        private final Tree<T>                             _tree;
+        
+        /**
+         * Constructor to create a node in the Tree.
+         * 
+         * @param tree
+         *            The <code>Tree</code> instance that created the node.
+         * @param data
+         *            The data bound to the node.
+         */
+        protected Node(final Tree<T> tree, final T data)
+        {
+            assert (tree != null) : "Not able to create Node.  The parameter 'tree' should not be null.";
+            assert (data != null) : "Not able to create Node.  The parameter 'data' should not be null.";
+            
+            this._tree = tree;
+            this._data = data;
+            this._children = new java.util.LinkedHashMap<T, Node<T>>();
+        }
+        
+        /**
+         * Adds a child to the node.
+         * 
+         * @param data
+         * @return
+         */
+        public Node<T> add(final T data)
+        {
+            Validate.isNotNull(this.getClass(),
+                    "The parameter 'data' should not be null.", data);
+            
+            final Node<T> node = this._tree.createNode(data);
+            node.setParent(this);
+            final Node<T> previousNode = this._children.put(node.getData(),
+                    node);
+            if (previousNode != null)
+            {
+                previousNode.setParent(null);
+            }
+            return (node);
+        }
+        
+        /*
+         * Gets the count count from this node down.
+         * 
+         * @return An integer number of 0 to n.
+         */
+        private int getChildCount()
+        {
+            int count = 0;
+            
+            if (this.isLeaf())
+            {
+                count = 0;
+            }
+            else
+            {
+                count = this.getChildren().size();
+                final List<Node<T>> childNodes = this.getChildren();
+                for (final Node<T> childNode : childNodes)
+                {
+                    count += childNode.getChildCount();
+                }
+            }
+            return (count);
+        }
+        
+        /**
+         * Gets the children added to this node.
+         * 
+         * @return A
+         *         <code>List<code> instance containing 0 to n <code>Node</code>
+         *         instances.
+         */
+        @SuppressWarnings("unchecked")
+        public List<Node<T>> getChildren()
+        {
+            final Collection<Node<T>> childNodes = this._children.values();
+            final List<Node<T>> children = new ArrayList<Node<T>>(childNodes);
+            return (children);
+        }
+        
+        /**
+         * Gets the data bound to the node.
+         * 
+         * @return The data held in the node.
+         */
+        public T getData()
+        {
+            return (this._data);
+        }
+        
+        /*
+         * Gets the height of the tree based on this node.
+         */
+        private int getHeight()
+        {
+            int height = 0;
+            
+            if (this.isLeaf())
+            {
+                height = 0;
+            }
+            else
+            {
+                int maxHeight = 0;
+                final List<Node<T>> childNodes = this.getChildren();
+                for (final Node<T> childNode : childNodes)
+                {
+                    height = 1 + childNode.getHeight();
+                    if (height > maxHeight)
+                    {
+                        maxHeight = height;
+                    }
+                }
+                height = maxHeight;
+            }
+            return (height);
+            
+        }
+        
+        /*
+         * A helper method to walk through the nodes finding the leaf data.
+         */
+        private List<T> getLeafData(final List<T> data)
+        {
+            if (this.isLeaf())
+            {
+                data.add(this._data);
+            }
+            else
+            {
+                final List<Node<T>> childNodes = this.getChildren();
+                for (final Node<T> childNode : childNodes)
+                {
+                    childNode.getLeafData(data);
+                }
+            }
+            return (data);
+        }
+        
+        /**
+         * Gets the parent of this node.
+         * 
+         * @return A <code>Node</code> instance that is the parent of this node.
+         *         May be null if this node is the root of the tree.
+         */
+        public Node<T> getParent()
+        {
+            return (this._parent);
+        }
+        
+        /**
+         * A method to determine if the node is empty. A node is empty if it
+         * does not have any children.
+         * 
+         * @return A boolean value. Will return true if the node is empty,
+         *         otherwise it will be false.
+         */
+        public boolean isEmpty()
+        {
+            return (this._children.isEmpty());
+        }
+        
+        /**
+         * A method to determine if the node is a leaf. A node is a leaf if it
+         * does not have any children.
+         * 
+         * @return A boolean value. Will return true if the node is a leaf,
+         *         otherwise it will be false.
+         */
+        public boolean isLeaf()
+        {
+            return (this.isEmpty());
+        }
+        
+        /**
+         * A method to determine if the node is the root. A node is the root if
+         * it does not have a parent. A Tree can have only one root node.
+         * 
+         * @return A boolean value. Will return true if the node is the root.,
+         *         otherwise it will be false.
+         */
+        public boolean isRoot()
+        {
+            final Node<T> root = this._tree.getRoot();
+            return (root.equals(this));
+        }
+        
+        /**
+         * Removes a child from the node.
+         * 
+         * @param data
+         *            The data to remove.
+         */
+        public void remove(final T data)
+        {
+            
+            Validate.isNotNull(this.getClass(),
+                    "The parameter 'data' should not be null.", data);
+            
+            final Node<T> node = this._children.remove(data);
+            if (node != null)
+            {
+                node.setParent(null);
+            }
+        }
+        
+        /*
+         * Sets the parent of the node. This is called when the addChild method
+         * is called.
+         */
+        private void setParent(final Node<T> parent)
+        {
+            assert (parent != null) : "The parameter 'parent' should not be null.";
+            assert (parent.getData() != null) : "The parameter parent's data should not be null.";
+            if (this._parent != null)
+            {
+                this._parent.remove(this._data);
+            }
+            this._parent = parent;
+        }
+    }
+    
+    /*
+     * The root of the tree. Should not be null.
+     */
+    private final Node<T> _root;
     
     /**
-     * Adds a child node to this node.
+     * Constructor of the Tree. A Tree must have one <code>Node</code> instance
+     * that is the root.
      * 
-     * @param key
-     *            The key that is used to reference the child node.
-     * @return A subtree <code>Tree</code> instance with the child node as the
-     *         root.
+     * @param data
+     *            The data of the root <code>Node</code> instance.
+     * 
      */
-    public abstract Tree<K> addChild(K key);
+    public Tree(final T data)
+    {
+        final Node<T> root = this.createNode(data);
+        this._root = root;
+    }
     
     /**
-     * Determines if the key is contained with in the children of this node. It
-     * will not grand children.
+     * Adds a child to the root <code>Node</code> instance.
      * 
-     * @param key
-     *            The key to look for.
-     * @return A boolean - true, if the key is contained within the child of
-     *         this node. Otherwise false is returned.
+     * @param data
+     *            The data of the new <code>Node</code> instance.
+     * @return The <code>Node</code> instance that was created.
      */
-    public abstract boolean containsChild(K key);
+    public Node<T> addChild(final T data)
+    {
+        final Node<T> node = this._root.add(data);
+        return (node);
+    }
+    
+    /*
+     * A factory helper method that creates the <code>Node</code>
+     * implementation.
+     * 
+     * @return The <code>Node</code> instance that was created.
+     */
+    protected Node<T> createNode(final T data)
+    {
+        final Node<T> node = new Node<T>(this, data);
+        return (node);
+    }
     
     /**
-     * Finds all of the leaf values of this tree by visiting all of the children
-     * of each node. A leaf is a node without children. If a leaf node has a
-     * value that is not null, then it will be returned.
+     * Gets the height of the Tree.
      * 
-     * @return A <code>List</code>instance containing non null values from leaf
-     *         nodes.
+     * @return An integer of 0 to n.
      */
-    public abstract List<K> findLeafKeys();
+    public int getHeight()
+    {
+        return (this._root.getHeight());
+    }
     
     /**
-     * Gets a child node referenced by the key. May be null if that key is not
-     * found.
+     * Gets all of the data within the leaf nodes. A leaf is a Node that does
+     * not have children.
      * 
-     * @param key
-     *            The key that is used to reference the child node.
-     * @return A subtree <code>Tree</code> instance with the child node as the
-     *         root.
+     * @return A <code>List</code> instance containing the data.
      */
-    public abstract Tree<K> getChild(K key);
+    public List<T> getLeafData()
+    {
+        final LinkedList<T> data = new LinkedList<T>();
+        this._root.getLeafData(data);
+        return (data);
+    }
     
     /**
-     * Gets the key of this node.
+     * Gets the number of nodes contained in this tree. A Tree instance will
+     * always have one node that is the root;
      * 
-     * @return The key of this node.
+     * @return An integer value from 1 to n.
      */
-    public abstract K getKey();
+    public int getNodeCount()
+    {
+        return (1 + this._root.getChildCount());
+    }
     
     /**
-     * Gets the parent tree of this node. That tree will contain this node as a
-     * child.
+     * Gets the root node of the Tree. A Tree can only have one root.
      * 
-     * @return A <code>Tree</code> instance with this node as a child. The root
-     *         of this tree is the parent.
+     * @return The <code>Node</code> instance that is the root.
      */
-    public abstract Tree<K> getParent();
-    
-    /**
-     * Gets the root of a tree by visiting the parent trees until the parent is
-     * null.
-     * 
-     * @return A <code>Tree</code> instance with this node as a child. The root
-     *         of this tree is the parent. If the parent is null, then the
-     *         current node is returned as root. The method getKey() will return
-     *         the root's key value if the parent is null.
-     * @see #getKey()
-     */
-    public abstract Tree<K> getRoot();
-    
-    /**
-     * Determines if a node is a leaf. A node is a leaf if it has not children.
-     * 
-     * @return boolean, true if this node is a leaf. Otherwise false is
-     *         returned.
-     */
-    public abstract boolean isLeaf();
-    
-    /**
-     * Removes a child node from this node.
-     * 
-     * @param key
-     *            The key that is used to reference the child node.
-     * 
-     * @return The subtree <code>Tree</code> instance of the child that is being
-     *         removed.
-     */
-    public abstract Tree<K> removeChild(K key);
+    public Node<T> getRoot()
+    {
+        return (this._root);
+    }
     
 }

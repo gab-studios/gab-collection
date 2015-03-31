@@ -18,3 +18,4 @@ hs_err_pid*
 # prevent temp files from being added and commited.
 *.bak
 
+/bak
