@@ -29,8 +29,8 @@ import org.gabsocial.gabdev.validate.Validate;
 
 /**
  * 
- * This is a Tree data structure that holds a value. The value may not be null.
- * A node can have 1 to many children. Duplicate siblings with the same value is
+ * This is a Tree data structure that holds a value. The value may be null. A
+ * node can have 1 to many children. Duplicate siblings with the same value are
  * not allowed.
  * 
  * The order of when a child is added is maintained.
@@ -64,7 +64,7 @@ public class Tree<T>
         private final java.util.LinkedHashMap<T, Node<T>> _children;
         
         /*
-         * The data held in this node.
+         * The data held in this node. May be null.
          */
         private final T                                   _data;
         
@@ -101,22 +101,47 @@ public class Tree<T>
          * 
          * @param data
          *            Is an object instance held in the Node.
-         * @return A <code>Node</code> instance that was created.
+         * @return A <code>Node</code> instance that was created. If the data is
+         *         already a child of this node, then null is returned.
          */
-        public Node<T> add(final T data)
+        public Node<T> addChild(final T data)
         {
             Validate.isNotNull(this.getClass(),
                     "The parameter 'data' should not be null.", data);
             
-            final Node<T> node = this._tree.createNode(data);
-            node.setParent(this);
-            final Node<T> previousNode = this._children.put(node.getData(),
-                    node);
-            if (previousNode != null)
+            Node<T> node = null;
+            if (!this.containsChild(data))
             {
-                previousNode.setParent(null);
+                node = this._tree.createNode(data);
+                node.setParent(this);
+                this._children.put(node.getData(), node);
             }
             return (node);
+        }
+        
+        /**
+         * Determines if data is a child of the node.
+         * 
+         * @param data
+         *            Is an object instance held in the Node.
+         * @return A boolean value that is true if the data is a child.
+         *         Otherwise, false is returned.
+         */
+        public boolean containsChild(final T data)
+        {
+            return (this._children.containsKey(data));
+        }
+        
+        /**
+         * Gets the node associated with the data.
+         * 
+         * @param data
+         *            Is an object instance held in the Node.
+         * @return A <code>Node</code> instance.
+         */
+        public Node<T> getChild(final T data)
+        {
+            return (this._children.get(data));
         }
         
         /*
@@ -147,9 +172,8 @@ public class Tree<T>
         /**
          * Gets the children added to this node.
          * 
-         * @return A
-         *         <code>List</code> instance containing 0 to n <code>Node</code>
-         *         instances.
+         * @return A <code>List</code> instance containing 0 to n
+         *         <code>Node</code> instances.
          */
         @SuppressWarnings("unchecked")
         public List<Node<T>> getChildren()
@@ -170,7 +194,7 @@ public class Tree<T>
         }
         
         /*
-         * Gets the height of the tree based on this node.
+         * Gets the height of the tree based on this node. Uses recursion.
          */
         private int getHeight()
         {
@@ -201,7 +225,7 @@ public class Tree<T>
         /*
          * A helper method to walk through the nodes finding the leaf data.
          */
-        private List<T> getLeafData(final List<T> data)
+        List<T> getLeafData(final List<T> data)
         {
             if (this.isLeaf())
             {
@@ -267,22 +291,32 @@ public class Tree<T>
         }
         
         /**
-         * Removes a child from the node.
+         * Removes a child from the node. The complete subtree is removed. The
+         * node that was removed is returned so that additional processing can
+         * be performed.
          * 
          * @param data
          *            The data to remove.
+         * 
+         * @return The <code>Node</code> instance that was removed. May be null
+         *         if not found.
          */
-        public void remove(final T data)
+        public Node<T> removeChild(final T data)
         {
             
             Validate.isNotNull(this.getClass(),
                     "The parameter 'data' should not be null.", data);
             
-            final Node<T> node = this._children.remove(data);
-            if (node != null)
+            final Node<T> removedNode = this._children.remove(data);
+            
+            // clear parent on node that is removed.
+            if (removedNode != null)
             {
-                node.setParent(null);
+                removedNode.setParent(null);
             }
+            
+            return (removedNode);
+            
         }
         
         /*
@@ -295,7 +329,7 @@ public class Tree<T>
             assert (parent.getData() != null) : "The parameter parent's data should not be null.";
             if (this._parent != null)
             {
-                this._parent.remove(this._data);
+                this._parent.removeChild(this._data);
             }
             this._parent = parent;
         }
@@ -311,8 +345,7 @@ public class Tree<T>
      * that is the root.
      * 
      * @param data
-     *            The data of the root <code>Node</code> instance.
-     * 
+     *            The data of the root <code>Node</code> instance. May be null.
      */
     public Tree(final T data)
     {
@@ -321,15 +354,17 @@ public class Tree<T>
     }
     
     /**
-     * Adds a child to the root <code>Node</code> instance.
+     * Adds a child to the root <code>Node</code> instance. This is a helper
+     * method that performs the same action as getting the root node and adding
+     * a child.
      * 
      * @param data
-     *            The data of the new <code>Node</code> instance.
+     *            The data of the new <code>Node</code> instance. May be null.
      * @return The <code>Node</code> instance that was created.
      */
     public Node<T> addChild(final T data)
     {
-        final Node<T> node = this._root.add(data);
+        final Node<T> node = this._root.addChild(data);
         return (node);
     }
     
@@ -387,6 +422,21 @@ public class Tree<T>
     public Node<T> getRoot()
     {
         return (this._root);
+    }
+    
+    /**
+     * Removes a child from the root <code>Node</code> instance. This is a
+     * helper method that performs the same action as getting the root node and
+     * remove a child.
+     * 
+     * @param data
+     *            The data of the <code>Node</code> instance to remove.
+     * @return The <code>Node</code> instance that was removed.
+     */
+    public Node<T> removeChild(final T data)
+    {
+        final Node<T> node = this._root.removeChild(data);
+        return (node);
     }
     
 }

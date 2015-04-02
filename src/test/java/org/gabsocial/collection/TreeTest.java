@@ -85,7 +85,7 @@ public class TreeTest
     {
         final Tree<String> tree = new Tree<String>("root");
         final Node<String> root = tree.getRoot();
-        root.add("helloworld");
+        root.addChild("helloworld");
         final List<Node<String>> children = root.getChildren();
         org.junit.Assert.assertEquals("The root's child list should be empty.",
                 1, children.size());
@@ -106,8 +106,8 @@ public class TreeTest
     {
         final Tree<String> tree = new Tree<String>("root");
         final Node<String> root = tree.getRoot();
-        root.add("H").add("E").add("L").add("L").add("O").add("W").add("O")
-                .add("R").add("L").add("D").add("HELLOWORLD");
+        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O").addChild("W").addChild("O")
+                .addChild("R").addChild("L").addChild("D").addChild("HELLOWORLD");
         
         org.junit.Assert.assertEquals(
                 "The tree's height does not equal what is expected", 11,
@@ -119,9 +119,9 @@ public class TreeTest
     {
         final Tree<String> tree = new Tree<String>("root");
         final Node<String> root = tree.getRoot();
-        root.add("H").add("E").add("L").add("L").add("O");
-        root.add("W");
-        root.add("O").add("R").add("L").add("D");
+        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O");
+        root.addChild("W");
+        root.addChild("O").addChild("R").addChild("L").addChild("D");
         
         org.junit.Assert.assertEquals(
                 "The tree's height does not equal what is expected", 5,
@@ -133,8 +133,8 @@ public class TreeTest
     {
         final Tree<String> tree = new Tree<String>("root");
         final Node<String> root = tree.getRoot();
-        root.add("H").add("E").add("L").add("L").add("O").add("W").add("O")
-                .add("R").add("L").add("D").add("HELLOWORLD");
+        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O").addChild("W").addChild("O")
+                .addChild("R").addChild("L").addChild("D").addChild("HELLOWORLD");
         
         // root + 11 child nodes = 12
         org.junit.Assert.assertEquals(
@@ -147,12 +147,12 @@ public class TreeTest
     {
         final Tree<String> tree = new Tree<String>("root");
         final Node<String> root = tree.getRoot();
-        root.add("H").add("E").add("L").add("L").add("O");
-        root.add("W");
+        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O");
+        root.addChild("W");
         
-        Node<String> expectedParent = root.add("O").add("R").add("L");
+        Node<String> expectedParent = root.addChild("O").addChild("R").addChild("L");
         
-        Node<String> child = expectedParent.add("D");
+        Node<String> child = expectedParent.addChild("D");
         
         Node<String> parent = child.getParent();
         
