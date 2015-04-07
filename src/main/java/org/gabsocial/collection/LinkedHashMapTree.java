@@ -44,7 +44,7 @@ import org.gabsocial.gabdev.validate.Validate;
  * @param <T>
  *            This defines the class type of the data.
  */
-public class Tree<T>
+public class LinkedHashMapTree<T>
 {
     
     /**
@@ -76,7 +76,7 @@ public class Tree<T>
         /*
          * The tree that this node belongs too.
          */
-        private final Tree<T>                             _tree;
+        private final LinkedHashMapTree<T>                             _tree;
         
         /**
          * Constructor to create a node in the Tree.
@@ -86,7 +86,7 @@ public class Tree<T>
          * @param data
          *            The data bound to the node.
          */
-        protected Node(final Tree<T> tree, final T data)
+        protected Node(final LinkedHashMapTree<T> tree, final T data)
         {
             assert (tree != null) : "Not able to create Node.  The parameter 'tree' should not be null.";
             assert (data != null) : "Not able to create Node.  The parameter 'data' should not be null.";
@@ -347,7 +347,7 @@ public class Tree<T>
      * @param data
      *            The data of the root <code>Node</code> instance. May be null.
      */
-    public Tree(final T data)
+    public LinkedHashMapTree(final T data)
     {
         final Node<T> root = this.createNode(data);
         this._root = root;

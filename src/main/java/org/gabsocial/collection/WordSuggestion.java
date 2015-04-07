@@ -32,19 +32,19 @@ import org.gabsocial.gabdev.validate.Validate;
  * @author Gregory Brown (sysdevone)
  * 
  */
-public class Words
+public class WordSuggestion
 {
     /*
      * Uses a tree to help determine suggestions.
      */
-    private final Tree<String> _tree;
+    private final LinkedHashMapTree<String> _tree;
     
     /**
      * Default constructor.
      */
-    public Words()
+    public WordSuggestion()
     {
-        this._tree = new Tree<String>("root");
+        this._tree = new LinkedHashMapTree<String>("root");
     }
     
     /**
@@ -59,7 +59,7 @@ public class Words
                 "The parameter 'word' should not be null.", word);
         
         final int count = word.length();
-        Tree.Node<String> node = this._tree.getRoot();
+        LinkedHashMapTree.Node<String> node = this._tree.getRoot();
         for (int i = 0; i < count; ++i)
         {
             // break the word into characters and add each character to the
@@ -102,7 +102,7 @@ public class Words
         // -------------------
         final LinkedList<String> data = new LinkedList<String>();
         final int count = word.length();
-        Tree.Node<String> node = this._tree.getRoot();
+        LinkedHashMapTree.Node<String> node = this._tree.getRoot();
         for (int i = 0; i < count; ++i)
         {
             final String character = Character.toString(word.charAt(i));
@@ -123,7 +123,24 @@ public class Words
         // suggestion.
         if (!node.isRoot())
         {
-            node.getLeafData(data);
+            while (data.isEmpty())
+            {
+                node.getLeafData(data);
+                
+                // if leaf data was not found, climb up to the parent node and
+                // check again.
+                if (data.isEmpty())
+                {
+                    node = node.getParent();
+                    if (node.isRoot())
+                    {
+                        // if the node is the root, then stop.
+                        // we do not want to return every word in this
+                        // container.
+                        break;
+                    }
+                }
+            }
         }
         
         return (data);

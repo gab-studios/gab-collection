@@ -21,18 +21,18 @@ package org.gabsocial.collection;
 
 import java.util.List;
 
-import org.gabsocial.collection.Tree.Node;
+import org.gabsocial.collection.LinkedHashMapTree.Node;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 
-public class TreeTest
+public class LinkedHashMapTreeTest
 {
     
     public static final void main(final String[] args)
     {
-        final TreeTest test = new TreeTest();
+        final LinkedHashMapTreeTest test = new LinkedHashMapTreeTest();
         try
         {
             test.initialize();
@@ -60,7 +60,7 @@ public class TreeTest
     @Test
     public void testRoot()
     {
-        final Tree<String> tree = new Tree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
         final Node<String> node = tree.getRoot();
         org.junit.Assert.assertNotNull("The tree root should not be null.",
                 node);
@@ -83,7 +83,7 @@ public class TreeTest
     @Test
     public void testRootAddChild()
     {
-        final Tree<String> tree = new Tree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
         final Node<String> root = tree.getRoot();
         root.addChild("helloworld");
         final List<Node<String>> children = root.getChildren();
@@ -104,7 +104,7 @@ public class TreeTest
     @Test
     public void testTreeHeight()
     {
-        final Tree<String> tree = new Tree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
         final Node<String> root = tree.getRoot();
         root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O").addChild("W").addChild("O")
                 .addChild("R").addChild("L").addChild("D").addChild("HELLOWORLD");
@@ -117,7 +117,7 @@ public class TreeTest
     @Test
     public void testTreeHeight2()
     {
-        final Tree<String> tree = new Tree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
         final Node<String> root = tree.getRoot();
         root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O");
         root.addChild("W");
@@ -131,7 +131,7 @@ public class TreeTest
     @Test
     public void testTreeNodeCount()
     {
-        final Tree<String> tree = new Tree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
         final Node<String> root = tree.getRoot();
         root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O").addChild("W").addChild("O")
                 .addChild("R").addChild("L").addChild("D").addChild("HELLOWORLD");
@@ -145,7 +145,7 @@ public class TreeTest
    @Test
     public void testNodeParent()
     {
-        final Tree<String> tree = new Tree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
         final Node<String> root = tree.getRoot();
         root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O");
         root.addChild("W");

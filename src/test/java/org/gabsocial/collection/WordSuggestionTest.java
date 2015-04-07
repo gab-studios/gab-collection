@@ -33,12 +33,12 @@ import org.junit.Test;
  * @author Gregory Brown (sysdevone)
  * 
  */
-public class WordsTest
+public class WordSuggestionTest
 {
     
     public static final void main(final String[] args)
     {
-        final WordsTest test = new WordsTest();
+        final WordSuggestionTest test = new WordSuggestionTest();
         try
         {
             test.initialize();
@@ -65,7 +65,7 @@ public class WordsTest
     @Test
     public void testSuggestion()
     {
-        Words suggestion = new Words();
+        WordSuggestion suggestion = new WordSuggestion();
         suggestion.add("helloworld");
         suggestion.add("hello");
         suggestion.add("hey");
@@ -91,7 +91,7 @@ public class WordsTest
     @Test
     public void testWords()
     {
-        Words suggestion = new Words();
+        WordSuggestion suggestion = new WordSuggestion();
         suggestion.add("helloworld");
         suggestion.add("hello");
         suggestion.add("hey");
