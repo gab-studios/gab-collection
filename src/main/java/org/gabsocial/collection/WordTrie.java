@@ -38,13 +38,11 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
 {
     
     /**
-     * The node within a Tree.
+     * The node within a Tree that holds a <code>Character</code>.
      * 
      * 
      * @author Gregory Brown (sysdevone)
      * 
-     * @param <T>
-     *            This defines the class type of the data.
      */
     public static class TrieNode extends Node<Character>
     {
@@ -56,7 +54,9 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
         
         /**
          * @param tree
+         *            The tree that this node is part of.
          * @param data
+         *            A <code>Character</code> instance.
          */
         protected TrieNode(final WordTrie tree, final Character data)
         {
@@ -86,7 +86,9 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
     }
     
     /**
-     * @param data
+     * Constructor.
+     * 
+     * The root is the '*' character.
      */
     public WordTrie()
     {

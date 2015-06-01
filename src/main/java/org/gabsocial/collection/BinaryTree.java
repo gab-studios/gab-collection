@@ -86,15 +86,20 @@ public class BinaryTree<T>
          * 
          * @param tree
          *            The <code>Tree</code> instance that created the node.
+         * @param parent
+         *            The parent bound to the node.
          * @param data
          *            The data bound to the node.
          */
-        protected Node(final BinaryTree<T> tree, final T data)
+        protected Node(final BinaryTree<T> tree, final Node<T> parent,
+                final T data)
         {
             assert (tree != null) : "Not able to create Node.  The parameter 'tree' should not be null.";
+            //assert (parent != null) : "Not able to create Node.  The parameter 'parent' should not be null.";
             assert (data != null) : "Not able to create Node.  The parameter 'data' should not be null.";
             
             this._tree = tree;
+            this._parent = parent;
             this._data = data;
         }
         
@@ -120,7 +125,7 @@ public class BinaryTree<T>
             }
             else
             {
-                final Node<T> node = new Node<T>(this._tree, data);
+                final Node<T> node = new Node<T>(this._tree, this, data);
                 this._leftChild = node;
                 return (node);
             }
@@ -147,7 +152,7 @@ public class BinaryTree<T>
             }
             else
             {
-                final Node<T> node = new Node<T>(this._tree, data);
+                final Node<T> node = new Node<T>(this._tree, this, data);
                 this._rightChild = node;
                 return (node);
             }
@@ -160,11 +165,11 @@ public class BinaryTree<T>
          */
         private int getChildCount()
         {
-            int count = 0;
+            int count = 1;
             
             if (this.isLeaf())
             {
-                count = 0;
+                count = 1;
             }
             else
             {
@@ -178,6 +183,7 @@ public class BinaryTree<T>
                     count += this._rightChild.getChildCount();
                 }
             }
+            
             return (count);
         }
         
@@ -255,8 +261,6 @@ public class BinaryTree<T>
         /**
          * Gets the left node associated with the data.
          * 
-         * @param data
-         *            Is an object instance held in the Node.
          * @return A <code>Node</code> instance.
          */
         public Node<T> getLeftChild()
@@ -278,8 +282,6 @@ public class BinaryTree<T>
         /**
          * Gets the left node associated with the data.
          * 
-         * @param data
-         *            Is an object instance held in the Node.
          * @return A <code>Node</code> instance.
          */
         public Node<T> getRightChild()
@@ -331,9 +333,6 @@ public class BinaryTree<T>
          * Removes a child from the node. The complete subtree is removed. The
          * node that was removed is returned so that additional processing can
          * be performed.
-         * 
-         * @param data
-         *            The data to remove.
          * 
          * @return The <code>Node</code> instance that was removed. May be null
          *         if not found.
@@ -398,7 +397,7 @@ public class BinaryTree<T>
      */
     protected Node<T> createNode(final T data)
     {
-        final Node<T> node = new Node<T>(this, data);
+        final Node<T> node = new Node<T>(this, null, data);
         return (node);
     }
     
@@ -497,7 +496,7 @@ public class BinaryTree<T>
      */
     public int getNodeCount()
     {
-        return (1 + this._root.getChildCount());
+        return (this._root.getChildCount());
     }
     
     /**

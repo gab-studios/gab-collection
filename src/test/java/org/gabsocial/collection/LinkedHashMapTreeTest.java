@@ -36,8 +36,6 @@ public class LinkedHashMapTreeTest
         try
         {
             test.initialize();
-            test.testRoot();
-            test.testRootAddChild();
         }
         finally
         {
@@ -60,7 +58,8 @@ public class LinkedHashMapTreeTest
     @Test
     public void testRoot()
     {
-        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>(
+                "root");
         final Node<String> node = tree.getRoot();
         org.junit.Assert.assertNotNull("The tree root should not be null.",
                 node);
@@ -70,12 +69,16 @@ public class LinkedHashMapTreeTest
         org.junit.Assert.assertTrue(
                 "The tree has children when it should not.", isLeaf);
         final boolean isEmpty = node.isEmpty();
-        org.junit.Assert.assertTrue(
-                "The tree has children when it should not.", isEmpty);
+        org.junit.Assert.assertTrue("The tree should have data.", !isEmpty);
+        
+        String data = node.getData();
+        org.junit.Assert.assertTrue("The tree should have data that equals 'root'.", "root".equals(data));
+        
         final List<Node<String>> rootChildren = node.getChildren();
         org.junit.Assert.assertNotNull(
                 "The tree's child list should not be a null object.",
                 rootChildren);
+        
         org.junit.Assert.assertEquals("The tree's child list should be empty.",
                 0, rootChildren.size());
     }
@@ -83,7 +86,8 @@ public class LinkedHashMapTreeTest
     @Test
     public void testRootAddChild()
     {
-        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>(
+                "root");
         final Node<String> root = tree.getRoot();
         root.addChild("helloworld");
         final List<Node<String>> children = root.getChildren();
@@ -104,10 +108,12 @@ public class LinkedHashMapTreeTest
     @Test
     public void testTreeHeight()
     {
-        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>(
+                "root");
         final Node<String> root = tree.getRoot();
-        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O").addChild("W").addChild("O")
-                .addChild("R").addChild("L").addChild("D").addChild("HELLOWORLD");
+        root.addChild("H").addChild("E").addChild("L").addChild("L")
+                .addChild("O").addChild("W").addChild("O").addChild("R")
+                .addChild("L").addChild("D").addChild("HELLOWORLD");
         
         org.junit.Assert.assertEquals(
                 "The tree's height does not equal what is expected", 11,
@@ -117,9 +123,11 @@ public class LinkedHashMapTreeTest
     @Test
     public void testTreeHeight2()
     {
-        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>(
+                "root");
         final Node<String> root = tree.getRoot();
-        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O");
+        root.addChild("H").addChild("E").addChild("L").addChild("L")
+                .addChild("O");
         root.addChild("W");
         root.addChild("O").addChild("R").addChild("L").addChild("D");
         
@@ -131,10 +139,12 @@ public class LinkedHashMapTreeTest
     @Test
     public void testTreeNodeCount()
     {
-        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>(
+                "root");
         final Node<String> root = tree.getRoot();
-        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O").addChild("W").addChild("O")
-                .addChild("R").addChild("L").addChild("D").addChild("HELLOWORLD");
+        root.addChild("H").addChild("E").addChild("L").addChild("L")
+                .addChild("O").addChild("W").addChild("O").addChild("R")
+                .addChild("L").addChild("D").addChild("HELLOWORLD");
         
         // root + 11 child nodes = 12
         org.junit.Assert.assertEquals(
@@ -142,15 +152,18 @@ public class LinkedHashMapTreeTest
                 tree.getNodeCount());
     }
     
-   @Test
+    @Test
     public void testNodeParent()
     {
-        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>("root");
+        final LinkedHashMapTree<String> tree = new LinkedHashMapTree<String>(
+                "root");
         final Node<String> root = tree.getRoot();
-        root.addChild("H").addChild("E").addChild("L").addChild("L").addChild("O");
+        root.addChild("H").addChild("E").addChild("L").addChild("L")
+                .addChild("O");
         root.addChild("W");
         
-        Node<String> expectedParent = root.addChild("O").addChild("R").addChild("L");
+        Node<String> expectedParent = root.addChild("O").addChild("R")
+                .addChild("L");
         
         Node<String> child = expectedParent.addChild("D");
         
@@ -159,4 +172,5 @@ public class LinkedHashMapTreeTest
         org.junit.Assert.assertEquals("The nodes parents are not equal",
                 expectedParent, parent);
     }
+    
 }

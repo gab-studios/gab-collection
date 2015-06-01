@@ -127,10 +127,9 @@ public class BinaryTreeTest
         final BinaryTree<String> tree = new BinaryTree<String>(
                 "root");
         final Node<String> root = tree.getRoot();
-        root.setLeftChild("H").setLeftChild("E").setLeftChild("L").setLeftChild("L")
+        root.setLeftChild("H").setRightChild("E").setLeftChild("L").setRightChild("L")
                 .setLeftChild("O");
-        root.setLeftChild("W");
-        root.setLeftChild("O").setLeftChild("R").setLeftChild("L").setLeftChild("D");
+        root.setRightChild("O").setLeftChild("R").setRightChild("L").setLeftChild("D");
         
         org.junit.Assert.assertEquals(
                 "The tree's height does not equal what is expected", 5,
@@ -159,11 +158,10 @@ public class BinaryTreeTest
         final BinaryTree<String> tree = new BinaryTree<String>(
                 "root");
         final Node<String> root = tree.getRoot();
-        root.setLeftChild("H").setLeftChild("E").setLeftChild("L").setLeftChild("L")
+        root.setLeftChild("H").setRightChild("E").setLeftChild("L").setRightChild("L")
                 .setLeftChild("O");
-        root.setLeftChild("W");
         
-        Node<String> expectedParent = root.setLeftChild("O").setLeftChild("R")
+        Node<String> expectedParent = root.setRightChild("O").setLeftChild("R")
                 .setLeftChild("L");
         
         Node<String> child = expectedParent.setLeftChild("D");
@@ -192,11 +190,11 @@ public class BinaryTreeTest
         
         List<String> levelOrderList = tree.getLevelOrderLeafData();
         
-        System.out.println("Level: ");
-        for (String data : levelOrderList)
-        {
-            System.out.println("Data: " + data);
-        }
+//        System.out.println("Level: ");
+//        for (String data : levelOrderList)
+//        {
+//            System.out.println("Data: " + data);
+//        }
     }
     
     @Test
@@ -215,12 +213,12 @@ public class BinaryTreeTest
         child2.setLeftChild("6");
         child2.setRightChild("7");
         
-        System.out.println("Pre: ");
-        List<String> preOrderList = tree.getLevelOrderLeafData();
-        for (String data : preOrderList)
-        {
-            System.out.println("Data: " + data);
-        }
+//        System.out.println("Pre: ");
+//        List<String> preOrderList = tree.getLevelOrderLeafData();
+//        for (String data : preOrderList)
+//        {
+//            System.out.println("Data: " + data);
+//        }
     }
     
     @Test
@@ -239,12 +237,12 @@ public class BinaryTreeTest
         child2.setLeftChild("6");
         child2.setRightChild("7");
         
-        System.out.println("In: ");
-        List<String> inOrderList = tree.getInOrderLeafData();
-        for (String data : inOrderList)
-        {
-            System.out.println("Data: " + data);
-        }
+//        System.out.println("In: ");
+//        List<String> inOrderList = tree.getInOrderLeafData();
+//        for (String data : inOrderList)
+//        {
+//            System.out.println("Data: " + data);
+//        }
     }
     
     @Test
@@ -263,11 +261,11 @@ public class BinaryTreeTest
         child2.setLeftChild("6");
         child2.setRightChild("7");
         
-        System.out.println("Post: ");
-        List<String> postOrderList = tree.getPostOrderLeafData();
-        for (String data : postOrderList)
-        {
-            System.out.println("Data: " + data);
-        }
+//        System.out.println("Post: ");
+//        List<String> postOrderList = tree.getPostOrderLeafData();
+//        for (String data : postOrderList)
+//        {
+//            System.out.println("Data: " + data);
+//        }
     }
 }

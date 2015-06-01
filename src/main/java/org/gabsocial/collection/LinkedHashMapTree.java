@@ -76,7 +76,7 @@ public class LinkedHashMapTree<T>
         /*
          * The tree that this node belongs too.
          */
-        private final LinkedHashMapTree<T>                             _tree;
+        private final LinkedHashMapTree<T>                _tree;
         
         /**
          * Constructor to create a node in the Tree.
@@ -254,15 +254,15 @@ public class LinkedHashMapTree<T>
         }
         
         /**
-         * A method to determine if the node is empty. A node is empty if it
-         * does not have any children.
+         * A method to determine if the node has data. A node is empty if it
+         * does not have any data.  The data is null.
          * 
-         * @return A boolean value. Will return true if the node is empty,
+         * @return A boolean value. Will return true if the data is empty,
          *         otherwise it will be false.
          */
         public boolean isEmpty()
         {
-            return (this._children.isEmpty());
+            return (this._data == null);
         }
         
         /**
@@ -274,7 +274,7 @@ public class LinkedHashMapTree<T>
          */
         public boolean isLeaf()
         {
-            return (this.isEmpty());
+            return (this._children.isEmpty());
         }
         
         /**
