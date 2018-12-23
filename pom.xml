@@ -10,12 +10,12 @@
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The GAB Studios Java Collection Library for data structures</description>
-	<url>https://github.com/gabstudios/gab-collection</url>
+	<url>https://github.com/gab-studios/gab-collection</url>
 
 	<licenses>
 		<license>
 			<name>Apache v2.0</name>
-			<url>https://github.com/gab-studios/gab-validate/blob/master/LICENSE.txt</url>
+			<url>https://github.com/gab-studios/gab-collection/blob/master/LICENSE.txt</url>
 		</license>
 	</licenses>
 
@@ -29,9 +29,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:http://github.com/gabstudios/gab-collection.git</connection>
-		<developerConnection>scm:http://github.com/gabstudios/gab-collection.git</developerConnection>
-		<url>http://github.com/gabstudios/gab-collection.git</url>
+		<connection>scm:http://github.com/gab-studios/gab-collection.git</connection>
+		<developerConnection>scm:http://github.com/gab-studios/gab-collection.git</developerConnection>
+		<url>http://github.com/gab-studios/gab-collection.git</url>
 	</scm>
 
 	<distributionManagement>
