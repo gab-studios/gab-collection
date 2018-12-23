@@ -33,12 +33,12 @@ import org.junit.Test;
  * @author Gregory Brown (sysdevone)
  * 
  */
-public class WordTrieTest
+public class LinkedHashMapTrieTest
 {
     
     public static final void main(final String[] args)
     {
-        final WordTrieTest test = new WordTrieTest();
+        final LinkedHashMapTrieTest test = new LinkedHashMapTrieTest();
         try
         {
             test.initialize();
