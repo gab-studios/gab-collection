@@ -17,14 +17,14 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.collection;
+package com.gabstudios.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.gabsocial.gabdev.validate.Validate;
+import com.gabstudios.validate.Validate;
 
 
 /**
@@ -106,8 +106,7 @@ public class LinkedHashMapTree<T>
          */
         public Node<T> addChild(final T data)
         {
-            Validate.isNotNull(this.getClass(),
-                    "The parameter 'data' should not be null.", data);
+        	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
             
             Node<T> node = null;
             if (!this.containsChild(data))
@@ -129,6 +128,7 @@ public class LinkedHashMapTree<T>
          */
         public boolean containsChild(final T data)
         {
+        	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
             return (this._children.containsKey(data));
         }
         
@@ -141,6 +141,7 @@ public class LinkedHashMapTree<T>
          */
         public Node<T> getChild(final T data)
         {
+        	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
             return (this._children.get(data));
         }
         
@@ -175,7 +176,6 @@ public class LinkedHashMapTree<T>
          * @return A <code>List</code> instance containing 0 to n
          *         <code>Node</code> instances.
          */
-        @SuppressWarnings("unchecked")
         public List<Node<T>> getChildren()
         {
             final Collection<Node<T>> childNodes = this._children.values();
@@ -227,6 +227,7 @@ public class LinkedHashMapTree<T>
          */
         List<T> getLeafData(final List<T> data)
         {
+            assert (data != null) : "Not able to get Leaf Node.  The parameter 'data' should not be null.";
             if (this.isLeaf())
             {
                 data.add(this._data);
@@ -304,8 +305,7 @@ public class LinkedHashMapTree<T>
         public Node<T> removeChild(final T data)
         {
             
-            Validate.isNotNull(this.getClass(),
-                    "The parameter 'data' should not be null.", data);
+        	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
             
             final Node<T> removedNode = this._children.remove(data);
             
@@ -349,6 +349,7 @@ public class LinkedHashMapTree<T>
      */
     public LinkedHashMapTree(final T data)
     {
+    	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
         final Node<T> root = this.createNode(data);
         this._root = root;
     }
@@ -364,6 +365,7 @@ public class LinkedHashMapTree<T>
      */
     public Node<T> addChild(final T data)
     {
+    	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
         final Node<T> node = this._root.addChild(data);
         return (node);
     }
@@ -376,6 +378,7 @@ public class LinkedHashMapTree<T>
      */
     protected Node<T> createNode(final T data)
     {
+        assert (data != null) : "Not able to create Node.  The parameter 'data' should not be null.";
         final Node<T> node = new Node<T>(this, data);
         return (node);
     }
@@ -435,6 +438,7 @@ public class LinkedHashMapTree<T>
      */
     public Node<T> removeChild(final T data)
     {
+    	Validate.defineObject(data).testNotNull().throwValidationExceptionOnFail().validate();
         final Node<T> node = this._root.removeChild(data);
         return (node);
     }
