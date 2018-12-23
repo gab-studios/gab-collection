@@ -17,7 +17,7 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.collection;
+package com.gabstudios.collection;
 
 import java.util.List;
 
@@ -33,12 +33,12 @@ import org.junit.Test;
  * @author Gregory Brown (sysdevone)
  * 
  */
-public class WordTrieTest
+public class LinkedHashMapTrieTest
 {
     
     public static final void main(final String[] args)
     {
-        final WordTrieTest test = new WordTrieTest();
+        final LinkedHashMapTrieTest test = new LinkedHashMapTrieTest();
         try
         {
             test.initialize();
@@ -68,7 +68,7 @@ public class WordTrieTest
     public void testGetWordsWithParamter()
     {
         // System.out.println("testGetWordsWithParamter() called");
-        WordTrie suggestion = new WordTrie();
+        LinkedHashMapTrie suggestion = new LinkedHashMapTrie();
         suggestion.add("helloworld");
         suggestion.add("hello");
         suggestion.add("hey");
@@ -95,7 +95,7 @@ public class WordTrieTest
     public void testGetWords()
     {
         // System.out.println("testGetWords() called");
-        WordTrie suggestion = new WordTrie();
+        LinkedHashMapTrie suggestion = new LinkedHashMapTrie();
         suggestion.add("helloworld");
         suggestion.add("hello");
         suggestion.add("hey");
@@ -119,7 +119,7 @@ public class WordTrieTest
     public void testContains()
     {
         // System.out.println("testGetWords() called");
-        WordTrie suggestion = new WordTrie();
+        LinkedHashMapTrie suggestion = new LinkedHashMapTrie();
         suggestion.add("helloworld");
         suggestion.add("hello");
         suggestion.add("hey");

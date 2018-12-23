@@ -17,11 +17,11 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.collection;
+package com.gabstudios.collection;
 
 import java.util.List;
 
-import org.gabsocial.collection.BinaryTree.Node;
+import com.gabstudios.collection.BinaryTree.Node;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

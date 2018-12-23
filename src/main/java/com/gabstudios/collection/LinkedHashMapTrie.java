@@ -17,13 +17,13 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.collection;
+package com.gabstudios.collection;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import org.gabsocial.gabdev.validate.Validate;
+import com.gabstudios.validate.Validate;
 
 
 /**
@@ -34,7 +34,7 @@ import org.gabsocial.gabdev.validate.Validate;
  * @author Gregory Brown (sysdevone)
  * 
  */
-public class WordTrie extends LinkedHashMapTree<Character> implements Trie
+public class LinkedHashMapTrie extends LinkedHashMapTree<Character> implements Trie
 {
     
     /**
@@ -58,7 +58,7 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
          * @param data
          *            A <code>Character</code> instance.
          */
-        protected TrieNode(final WordTrie tree, final Character data)
+        protected TrieNode(final LinkedHashMapTrie tree, final Character data)
         {
             super(tree, data);
             this._isWord = false;
@@ -90,7 +90,7 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
      * 
      * The root is the '*' character.
      */
-    public WordTrie()
+    public LinkedHashMapTrie()
     {
         super('*');
     }
@@ -103,8 +103,7 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
      */
     public void add(final String word)
     {
-        Validate.isNotNullOrEmpty(this.getClass(),
-                "The parameter 'word' should not be null.", word);
+    	Validate.defineString(word).testNotNullEmpty().throwValidationExceptionOnFail().validate();
         
         // TODO - what is the max length of a word?
         
@@ -140,9 +139,9 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
      * 
      * @return The <code>Node</code> instance that was created.
      */
-    @Override
     protected TrieNode createNode(final Character data)
     {
+        assert (data != null) : "Not able to create Node.  The parameter 'data' should not be null.";
         final TrieNode node = new TrieNode(this, data);
         return (node);
     }
@@ -168,6 +167,8 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
      */
     public List<String> getWords(final String prefix)
     {
+        Validate.defineString(prefix).testNotNullEmpty().throwValidationExceptionOnFail().validate();
+        //TODO - add a max.
         
         // walk prefix to known set of nodes.
         // input helo
@@ -234,9 +235,10 @@ public class WordTrie extends LinkedHashMapTree<Character> implements Trie
      * 
      * @see org.gabsocial.collection.Trie#contains(java.lang.String)
      */
-    @Override
     public boolean contains(String word)
     {
+    	Validate.defineString(word).testNotNullEmpty().throwValidationExceptionOnFail().validate();
+    	
         boolean isContained = false;
         if (word != null && word.length() > 0)
         {

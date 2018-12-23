@@ -17,7 +17,7 @@
  ***************************************************************************************** 
  */
 
-package org.gabsocial.collection;
+package com.gabstudios.collection;
 
 import java.util.List;
 
