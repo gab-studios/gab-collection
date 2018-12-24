@@ -52,4 +52,4 @@ Comments and feedback are greatly appreciated!!!
 [Copyright 2015 Gregory Brown]: https://github.com/gab-studios/gab-collection/tree/master/COPYRIGHT.txt
 [Apache v2.0 License]: https://github.com/gab-studios/gab-collection/tree/master/LICENSE.txt
 [wiki]: https://github.com/gab-studios/gab-collection/wiki
-[examples]: https://github.com/gab-studios/gab-validate/wiki/Examples
+[examples]: https://github.com/gab-studios/gab-collection/wiki/Examples
