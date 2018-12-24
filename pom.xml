@@ -32,6 +32,7 @@
 		<connection>scm:http://github.com/gab-studios/gab-collection.git</connection>
 		<developerConnection>scm:http://github.com/gab-studios/gab-collection.git</developerConnection>
 		<url>http://github.com/gab-studios/gab-collection.git</url>
+		<tag>v1.0.0</tag>
 	</scm>
 
 	<distributionManagement>

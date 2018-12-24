@@ -319,6 +319,14 @@ public class LinkedHashMapTree<T>
             
         }
         
+        /**
+         * Removes all children from the current node.  Child nodes will be lost.
+         */
+        public void removeChildren()
+        {
+        	this._children.clear();
+        }
+        
         /*
          * Sets the parent of the node. This is called when the addChild method
          * is called.
