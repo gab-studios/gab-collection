@@ -131,4 +131,24 @@ public class LinkedHashMapTrieTest
         
         org.junit.Assert.assertTrue(isContained);
     }
+    
+    @Test
+    public void testClear()
+    {
+        // System.out.println("testGetWords() called");
+        LinkedHashMapTrie suggestion = new LinkedHashMapTrie();
+        suggestion.add("helloworld");
+        suggestion.add("hello");
+        suggestion.add("hey");
+        suggestion.add("world");
+        
+        suggestion.clear();
+        
+        boolean isContained = suggestion.contains("world");
+        int height = suggestion.getHeight();
+        //System.out.println( "Height: " + height );
+        // System.out.println("Is word 'world' contained: " + isContained);
+        org.junit.Assert.assertFalse(isContained);
+        org.junit.Assert.assertTrue(height == 0);
+    }
 }
