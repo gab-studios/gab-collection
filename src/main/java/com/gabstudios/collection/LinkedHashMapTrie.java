@@ -96,12 +96,23 @@ public class LinkedHashMapTrie extends LinkedHashMapTree<Character> implements T
     }
     
     /**
+     * Used to clear and reset the Trie.
+     */
+    @Override
+	public void clear()
+    {
+    	Node<Character> root = this.getRoot();
+    	root.removeChildren();
+    }
+    
+    /**
      * Add a word to the container that will be used as suggestions.
      * 
      * @param word
      *            A <code>String</code> instance. May not be null or empty.
      */
-    public void add(final String word)
+    @Override
+	public void add(final String word)
     {
     	Validate.defineString(word).testNotNullEmpty().throwValidationExceptionOnFail().validate();
         
@@ -139,7 +150,8 @@ public class LinkedHashMapTrie extends LinkedHashMapTree<Character> implements T
      * 
      * @return The <code>Node</code> instance that was created.
      */
-    protected TrieNode createNode(final Character data)
+    @Override
+	protected TrieNode createNode(final Character data)
     {
         assert (data != null) : "Not able to create Node.  The parameter 'data' should not be null.";
         final TrieNode node = new TrieNode(this, data);
@@ -152,7 +164,8 @@ public class LinkedHashMapTrie extends LinkedHashMapTree<Character> implements T
      * @return A <code>List</code> instance containing zero to many
      *         <code>String</code> instances.
      */
-    public List<String> getWords()
+    @Override
+	public List<String> getWords()
     {
         return (this.getWords("*"));
     }
@@ -165,7 +178,8 @@ public class LinkedHashMapTrie extends LinkedHashMapTree<Character> implements T
      * @return A <code>List</code> instance containing zero to many
      *         <code>String</code> instances.
      */
-    public List<String> getWords(final String prefix)
+    @Override
+	public List<String> getWords(final String prefix)
     {
         Validate.defineString(prefix).testNotNullEmpty().throwValidationExceptionOnFail().validate();
         //TODO - add a max.
@@ -235,7 +249,8 @@ public class LinkedHashMapTrie extends LinkedHashMapTree<Character> implements T
      * 
      * @see org.gabsocial.collection.Trie#contains(java.lang.String)
      */
-    public boolean contains(String word)
+    @Override
+	public boolean contains(String word)
     {
     	Validate.defineString(word).testNotNullEmpty().throwValidationExceptionOnFail().validate();
     	

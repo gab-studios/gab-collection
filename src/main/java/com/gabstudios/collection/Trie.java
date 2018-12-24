@@ -66,4 +66,9 @@ public abstract interface Trie
      *            The word to add to the Trie. Must not be null or empty.
      */
     public void add(String word);
+    
+    /**
+     * Used to clear and reset the Trie.
+     */
+    public void clear();
 }
